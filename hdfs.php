@@ -6,44 +6,21 @@
 -->
 <html>
 	<head>
-		<title>Storage Homepage</title>
-		<meta charset="utf-8" />
-<?php
+        <?php
 session_start();
 if(!isset($_SESSION["name"]))
 {
 header("location:index.php");
 }
 ?>
+		<title>HDFS</title>
+		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assetslist/css/main.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<script type="text/javascript">
-window.onload = function () {
-	var chart = new CanvasJS.Chart("chartContainer",
-	{
-		theme: "theme2",
-		title:{
-			text: "Capacity"
-		},		
-		data: [
-		{       
-			type: "pie",
-			showInLegend: true,
-			toolTipContent: "{y} - #percent %",
-			legendText: "{indexLabel}",
-			dataPoints: [
-				{  y: 20, indexLabel: "Used Space" },
-				{  y: 80, indexLabel: "Free Space" },
-			]
-		}
-		]
-	});
-	chart.render();
-}
-</script>
+		
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 		
 	</head>
@@ -54,8 +31,7 @@ window.onload = function () {
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<a href="#" class="logo">Welcome to LocalHost <span><strong><?php if(isset($_SESSION["name"]))
-{ echo $_SESSION["name"]; }?></strong></span></a>
+						<a href="#" class="logo">Welcome to LocalHost <span><strong>Abhishek Dey</strong></span></a>
 						<nav>
 							<a href="#menu">Menu</a>
 						</nav>
@@ -64,11 +40,11 @@ window.onload = function () {
 				<!-- Menu -->
 					<nav id="menu">
 						<ul class="links">
-							<li><a href="home.php">Home</a></li>
+							<li><a href="home.html">Home</a></li>
 						</ul>
 						<ul class="actions vertical">
 							<li>Thank You</li>
-							<li><a href="logout.php" class="button fit">Log Out</a></li>
+							<li><a href="index.html" class="button fit">Log Out</a></li>
 						</ul>
 					</nav>
 
@@ -83,7 +59,7 @@ window.onload = function () {
 										
 									</span>
 									<header class="major">
-										<div id="chartContainer" style="height: 435px; width: 100%;"></div>	
+										<h3>Hadoop Distributed File System  (HDFS)</h3>	
 									</header>
 								</article>
 								<article>
@@ -92,14 +68,12 @@ window.onload = function () {
 									</span>
 									<header class="major">
 										<h3>Welcome to your online space</h3>
-										<p>You have <b>5 GB</b> of space available!</p>
-<br>
-<br>
-<form action="upload.php" method="post" enctype="multipart/form-data">
-<ul class="actions">
-										<li><input type='file' name='image' class="button next" value="Select File" required> </li>
-									</ul>
-<input class="btn_login" onclick="" value="Upload File" type="submit" /> </form>
+										<p>Before you use hdfs, you need to store your data on Static staas</p>
+										<br>
+										<br>
+										<ul class="actions">
+										<li><a href="list.php" class="button next">Move to STATIC STAAS</a></li>
+										</ul>
 									</header>
 								</article>
 							</section>
@@ -110,16 +84,15 @@ window.onload = function () {
 									<header class="major">
 										<h2>Your Available Data</h2>
 									</header>
-<?php
+									<?php
 $dir_path = "cloud_storage/".$_SESSION["name"];
 if (is_dir($dir_path)) {
     $i=0;
     if ($dir_handler = opendir($dir_path)) {
         while (($file = readdir($dir_handler)) !== false) {
-            if ($i >= 2){
+            if($i >= 2){
             echo "filename: $file"."\n";
-	    echo "<br>";
-            }
+	    echo "<br>";}
             $i++;
         }
         closedir($dir_handler);
@@ -127,29 +100,10 @@ if (is_dir($dir_path)) {
 }
 ?>
 									<ul class="actions">
-										<li>
-                                            <br>
-<form method="post" action="paas.php">
-<select name="file"  required>
-    <?php
-$dir_path = "cloud_storage/".$_SESSION["name"];
-    echo "<option style='color:red;' value='' disabled selected>Click Here to Select File</option>";
-if (is_dir($dir_path)) {
-    $i=0;
-    if ($dir_handler = opendir($dir_path)) {
-        while (($file = readdir($dir_handler)) !== false) {
-            if ($i >= 2){
-            echo "<option style='color:red;' value="."$file".">$file</option>";
-            }
-            $i++;
-        }
-        closedir($dir_handler);
-    }
-}
-?>
-    </select>
+										<li><form method="post" action="paas.php">
+<input type="text" name="file" placeholder="Enter File Name" />
 <br>
-<input class="button next" value="Download Now" type="submit" /></form></li>
+<input class="button next" value="Process Now" type="submit" /></form></li>
 									</ul>
 								</div>
 							</section>
