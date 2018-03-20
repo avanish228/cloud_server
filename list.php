@@ -111,12 +111,16 @@ window.onload = function () {
 										<h2>Your Available Data</h2>
 									</header>
 <?php
-$dir_path = "/cloud_storage/".$_SESSION["name"];
+$dir_path = "cloud_storage/".$_SESSION["name"];
 if (is_dir($dir_path)) {
+    $i=0;
     if ($dir_handler = opendir($dir_path)) {
         while (($file = readdir($dir_handler)) !== false) {
+            if ($i >= 2){
             echo "filename: $file"."\n";
 	    echo "<br>";
+            }
+            $i++;
         }
         closedir($dir_handler);
     }
@@ -124,10 +128,28 @@ if (is_dir($dir_path)) {
 ?>
 									<ul class="actions">
 										<li>
+                                            <br>
 <form method="post" action="paas.php">
-<input type="text" name="file" placeholder="Enter File Name" />
+<select name="file" value="aba" required>
+    <?php
+$dir_path = "cloud_storage/".$_SESSION["name"];
+    echo "<option style='color:red;' value='' disabled selected>Click Here to Select File</option>";
+if (is_dir($dir_path)) {
+    $i=0;
+    if ($dir_handler = opendir($dir_path)) {
+        while (($file = readdir($dir_handler)) !== false) {
+            if ($i >= 2){
+            echo "<option style='color:red;' value="."$file".">$file</option>";
+            }
+            $i++;
+        }
+        closedir($dir_handler);
+    }
+}
+?>
+    </select>
 <br>
-<input class="button next" value="Process Now" type="submit" /></form></li>
+<input class="button next" value="Download Now" type="submit" /></form></li>
 									</ul>
 								</div>
 							</section>
